@@ -1,9 +1,12 @@
 db.produtos
   .find(
     {
-      "valoresNutricionais.1.tipo": "calorias",
-      "valoresNutricionais.1.quantidade": { $gte: 30, $lte: 40 },
+      valoresNutricionais: {
+        $elemMatch: { tipo: "calorias", percentual: { $gte: 30, $lte: 40 } },
+      },
     },
-    { nome: 1 },
+    { nome: 1, _id: 0 },
   )
-  .pretty(); // n deu certo
+  .pretty();
+
+  db.produtos.find({ valoresNutricionais: { $elemMatch: { tipo: "calorias", percentual: { $gte: 30, $lte: 40 } } } }, { nome: 1, _id: 0 }).pretty();
